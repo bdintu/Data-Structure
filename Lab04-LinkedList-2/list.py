@@ -6,15 +6,18 @@ class list:
 
     def __str__(self):
         s = ""
-        for i in self.travel():
+        for i in self:
             s += str(i.data) + " -> "
         return s
 
-    def travel(self):
+    def __iter__(self):
         cur = self.begin
-        while(cur!=None):
+        while(cur != None):
             yield cur
             cur = cur.next
+    
+    def __len__(self):
+        return self.size
 
     def empty(self):
         return self.begin == None
