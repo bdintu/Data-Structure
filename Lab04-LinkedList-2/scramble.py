@@ -8,7 +8,7 @@ class scramble:
     def __str__(self):
         return str(self.l)
 
-    def split(self, p):
+    def _split(self, p):
         n = int(p*self.l.size/100)
         i = 0
         for it in self.l:
@@ -19,39 +19,37 @@ class scramble:
     def bottomUp(self, p):
         if p == 0:
             return
-        last = self.split(p)
-        self.l.end.next = self.l.begin
-        self.l.begin = last.next
-        last.next = None
+
+        begin = self.l.begin
+        end = self._split(p)
+        self.l.erase(begin, end)
+        self.l.push_back(None, begin, end)
+        end.next = None
 
     def riffle(self, p):
         if p == 0:
             return
-        start = self.split(p)
+
+        start = self._split(p)
         i = self.l.begin
         j = start.next
         start.next = None
-        while i!=None and j!=None:
-            tmp_i = i.next
-            tmp_j = j.next
 
+        while i!=None and j!=None:
+            tmp = j.next
             j.next = i.next
             i.next = j
-            tmp = i.next
-            i = tmp_i
-            j = tmp_j
+            i = i.next.next
+            j = tmp
        
-        if i != None:
-            tmp.next = i
-        else:
-            tmp.next = j
-        
+        if j != None:
+            i = j
 
-    def deRiffle(self, percent):
+    def deRiffle(self, p):
         pass
 
-    def deBottomUp(self, percent):
-        pass
+    def deBottomUp(self, p):
+        self.bottomUp(100-p)
 
 if __name__ == "__main__":
     s = scramble()
@@ -64,3 +62,9 @@ if __name__ == "__main__":
 
     s.riffle(60)
     print("riffle 60%   : ", s)
+
+    #s.deRiffle(60)
+    #print("deRiffle 60% : ", s)
+
+    s.deBottomUp(30)
+    print("deBottonUp 30:", s)
