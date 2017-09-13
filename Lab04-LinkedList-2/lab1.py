@@ -1,6 +1,10 @@
 from list import list
 from node import node
 
+def status(l):
+    print("l       : ", l)
+    print("size    : ", l.size)
+    print("-"*10)
 l = list()
 for i in range(2, -1, -1):
     l.push_front(node(i))
@@ -13,14 +17,18 @@ print("size  : ", l.size)
 print("front : ", l.front())
 print("back  : ", l.back())
 
-tmp = l.find(2)
-if tmp:
-    print("find 2 is", tmp.data)
 
 print("remove 0: ", l.remove(0))
-print("remove 5: ", l.remove(5))
 print("remove 9: ", l.remove(9))
+status(l)
+
+item4 = l.find(4)
+if item4:
+    print("find 4 is", item4.data)
+print("erase 1-4: ", l.erase(None, l.begin, item4))
+status(l)
+
 print("pop_front:", l.pop_front().data)
 print("pop_back: ", l.pop_back().data)
-print("l       : ", l)
-print("size    : ", l.size)
+status(l)
+

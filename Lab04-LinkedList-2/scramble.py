@@ -30,10 +30,10 @@ class scramble:
         if p == 0:
             return
 
-        start = self._split(p)
+        begin = self._split(p)
         i = self.l.begin
-        j = start.next
-        start.next = None
+        j = begin.next
+        begin.next = None
 
         while i!=None and j!=None:
             tmp = j.next
