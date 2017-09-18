@@ -22,7 +22,7 @@ class scramble:
 
         begin = self.l.begin
         end = self._split(p)
-        self.l.erase(begin, end)
+        self.l.erase(None, begin, end)
         self.l.push_back(None, begin, end)
         end.next = None
 
@@ -46,7 +46,8 @@ class scramble:
             i = j
 
     def deRiffle(self, p):
-        pass
+        p = self.l.size - (p/100*self.l.size)
+        n = 0
 
     def deBottomUp(self, p):
         self.bottomUp(100-p)
@@ -63,8 +64,8 @@ if __name__ == "__main__":
     s.riffle(60)
     print("riffle 60%   : ", s)
 
-    #s.deRiffle(60)
-    #print("deRiffle 60% : ", s)
+    s.deRiffle(60)
+    print("deRiffle 60% : ", s)
 
     s.deBottomUp(30)
     print("deBottonUp 30:", s)
