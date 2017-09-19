@@ -19,15 +19,18 @@ class ParenthesisMatching:
                 self.s.push(i)
             elif i in self.close:
                 if self.s.empty():
-                    self.error = True
+                    self.error = 1
+                    return
                 else:
                     open = self.s.pop()
                     if not self.match(open, i):
-                        self.error = True
+                        self.error = 2
 
     def __str__(self):
-        if self.error:
-            return "MISMATCH"
+        if self.error == 1:
+            return "MISMATCH close paren. exceed"
+        elif self.error == 2:
+            return "MISMATCH open-close"
         elif not self.s.empty():
             return "MISMATCH open paren. exceed"
         else:
