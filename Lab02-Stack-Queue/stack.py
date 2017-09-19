@@ -1,5 +1,5 @@
 class Stack:
-    def __init__(self, items=[], max_size=256):
+    def __init__(self, items=[], max_size=128):
         self.items = items
         self.max_size = max_size
 
@@ -19,4 +19,7 @@ class Stack:
         return self.items == []
 
     def full(self):
-        return self.size() == self.max_size;
+        return self.size() == self.max_size
+
+    def clear(self):
+        self.items = []

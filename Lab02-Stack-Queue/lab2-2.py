@@ -2,19 +2,18 @@ from stack import Stack
 
 class ParenthesisMatching:
     def __init__(self, str):
-        self.open = ['{', '[', '(']
-        self.close = ['}', '}', ')']
+        self.str = str
 
+        self.open = "{[("
+        self.close = "}})"
         self.s = Stack()
         self.error = False
-        self.str = str
 
     def match(self, open, close):
         return self.open.index(open) == self.close.index(close)
 
     def main(self):
-        #what is that
-        self.s.items = []
+        self.s.clear()
         for i in self.str:
             if i in self.open:
                 self.s.push(i)
