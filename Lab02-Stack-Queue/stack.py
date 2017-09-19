@@ -1,25 +1,37 @@
 class Stack:
-    def __init__(self, items=[], max_size=128):
+    def __init__(self, items=[], max=128):
         self.items = items
-        self.max_size = max_size
+        self.max = max
 
-    def push(self, element):
-        self.items += [element]
-
-    def pop(self):
-        return self.items.pop()
-
-    def peek(self):
-        return self.items[-1]
-
-    def size(self):
+    def __len__(self):
         return len(self.items)
 
+    def __if__(self):
+        return self.__len__() != 0
+
+    def __str__(self):
+        return str(self.items)
+
+    def push(self, element):
+        if len(self) < self.max:
+            self.items += [element]
+
+    def pop(self):
+        if self:
+            return self.items.pop()
+
+    def peek(self):
+        if self:
+            return self.items[-1]
+
+    def size(self):
+        return self.__len__()
+
     def empty(self):
-        return self.items == []
+        return not self.__if__()
 
     def full(self):
-        return self.size() == self.max_size
+        return self.__len__() == self.max
 
     def clear(self):
         self.items = []
