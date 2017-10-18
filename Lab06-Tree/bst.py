@@ -29,16 +29,16 @@ class bst:
     def insertR(self, data):
         self.root = bst._insert(self.root, data)
 
-    def _insert(cur, data):
-        if cur is None:
+    def _insert(root, data):
+        if root is None:
             return node(data)
         else:
-            if data < cur.data:
-                cur.left = bst._insert(cur.left, data)
+            if data < root.data:
+                root.left = bst._insert(root.left, data)
             else:
-                cur.right = bst._insert(cur.right, data)
+                root.right = bst._insert(root.right, data)
 
-        return cur
+        return root
 
     def count(self, parent):
         i = 0
@@ -50,92 +50,76 @@ class bst:
         return i
 
     def eraseR(self, data):
-        parent = self.searchParentI(data)
-        child = self.searchI(data)
-        if self.count(child):
-            if parent.left and parent.left.data == data:
-                parent.left = None
-            elif parent.right and parent.right.data == data:
-                parent.right = None
+        bst._erase(self.root, data)
 
-        elif self.count(child) == 1:
-            if chile.left:
-                parent
-                
+    def _erase(root, data):
+        if not root:
+            return None
+
+        if root.data > data:
+            root.left = bst._erase(root.left, data)
+        elif root.data < data:
+            root.right = bst._erase(root.right, data)
+        else:
+            if not root.left:
+                return root.right
+            elif not root.right:
+                return root.left
+            else:
+                successor = root.right
+                while successor.left:
+                    successor = successor.left
+
+                root.data = successor.data
+                root.right = bst._erase(root.right, successor.data)
+
+        return root
 
     def searchI(self, data):
-        cur = self.root
-        while cur:
-            if data < cur.data:
-                cur = cur.left
-            elif data > cur.data:
-                cur = cur.right
+        root = self.root
+        while root:
+            if data < root.data:
+                root = root.left
+            elif data > root.data:
+                root = root.right
             else:
-                return cur
+                return root
         
         return None
 
-    def searchR(self, data)
+    def searchR(self, data):
         return bst._search(self.root, data)
 
-    def _search(cur, data)
-        if cur == None:
+    def _search(root, data):
+        if root is None:
             return None
-        elif data < cur.data:
-            return bst._search(cur.left, data)
-        elif data > cur.data:
-            return bst._search(cur.right, data)
+        elif data < root.data:
+            return bst._search(root.left, data)
+        elif data > root.data:
+            return bst._search(root.right, data)
         else:
-            return cur
-
-    def searchParentI(self, data):
-        cup = None
-        cur = self.root
-        while cur:
-            if data < cur.data:
-                cur = cur.left
-            elif data > cur.data:
-                cur = cur.right
-            else:
-                return cup
-
-            cup = cur
-        
-        return None
-
-    def searchParentR(self, data)
-        return bst._search(self.root, data)
-
-    def _searchParent(cur, data)
-        if cur == None:
-            return None
-        elif data < cur.data:
-            return bst._search(cur.left, data)
-        elif data > cur.data:
-            return bst._search(cur.right, data)
-        else:
-            return cur
+            return root
 
     def pathI(self, data):
-        cur = self.root
-        while cur:
-            print(cur.data, end=' ')
-            if data < cur.data:
-                cur = cur.left
-            elif data > cur.data:
-                cur = cur.right
+        root = self.root
+        while root:
+            print(root.data, end=' ')
+            if data < root.data:
+                root = root.left
+            elif data > root.data:
+                root = root.right
 
     def pathR(self, data):
         bst._path(self.root, data)
 
-    def _path(cur, data):
-        print(cur.data, end=' ')
-        if cur == None:
+    def _path(root, data):
+        print(root.data, end=' ')
+        if root is None:
             return
-        elif data < cur.data:
-            bsr._path(cur.left, data)
-        elif data > cur.data:
-            bst._path(cur.right, data)
+        elif data < root.data:
+            bst._path(root.left, data)
+        elif data > root.data:
+            bst._path(root.right, data)
 
     def bfs(self):
         stack = [self.root]
@@ -143,29 +127,29 @@ class bst:
     def inorderR(self):
         bst._inorder(self.root)
 
-    def _inorder(cur):
-        if cur:
-            bst._inorder(cur.left)
-            print(cur.data, end=' ')
-            bst._inorder(cur.right)
+    def _inorder(root):
+        if root:
+            bst._inorder(root.left)
+            print(root.data, end=' ')
+            bst._inorder(root.right)
 
     def preorderR(self):
         bst._preorder(self.root)
 
-    def _preorder(cur):
-        if cur:
-            print(cur.data, end=' ')
-            bst._preorder(cur.left)
-            bst._preorder(cur.right)
+    def _preorder(root):
+        if root:
+            print(root.data, end=' ')
+            bst._preorder(root.left)
+            bst._preorder(root.right)
 
     def postorderR(self):
         bst._postorder(self.root)
 
-    def _postorder(cur):
-        if cur:
-            bst._postorder(cur.left)
-            bst._postorder(cur.right)
-            print(cur.data, end=' ')
+    def _postorder(root):
+        if root:
+            bst._postorder(root.left)
+            bst._postorder(root.right)
+            print(root.data, end=' ')
 
     def printSideway(self):
         bst._siderway(self.root, 0)
@@ -185,10 +169,18 @@ if __name__ == "__main__":
         t.insertI(i)
         tR.insertR(i)
     
-    print("inOrder Iter : ")
+    print("\ninOrder Iter : ")
     t.inorderR()
-    print("inOrder Rec  : ")
+    print("\ninOrder Rec  : ")
     tR.inorderR()
 
+    print("print sideway")
+    tR.printSideway();
+
     print("\npath %s: "%l[5], end='')
-    t.path(l[5])
+    t.pathR(l[5])
+
+    tR.eraseR(9)
+
+    print("print sideway")
+    tR.printSideway();
