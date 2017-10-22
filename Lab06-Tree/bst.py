@@ -4,29 +4,7 @@ class bst:
     def __init__(self, root=None):
         self.root = root
 
-    def insertI(self, data):
-        n = node(data)
-
-        if self.root is None:
-            self.root = n
-
-        else:
-            parent = None
-            child = self.root
-
-            while child:
-                parent = child
-                if data < child.data:
-                    child = child.left
-                else:
-                    child = child.right
-
-            if data < parent.data:
-                parent.left = n
-            else:
-                parent.right = n
-
-    def insertR(self, data):
+    def insert(self, data):
         self.root = bst._insert(self.root, data)
 
     def _insert(root, data):
@@ -40,21 +18,12 @@ class bst:
 
         return root
 
-    def count(self, parent):
-        i = 0
-        if parent:
-            if parent.left:
-                i += 1
-            if parent.right:
-                i += 1
-        return i
-
-    def eraseR(self, data):
+    def erase(self, data):
         bst._erase(self.root, data)
 
     def _erase(root, data):
         if not root:
-            return None
+            return
 
         if root.data > data:
             root.left = bst._erase(root.left, data)
@@ -75,24 +44,12 @@ class bst:
 
         return root
 
-    def searchI(self, data):
-        root = self.root
-        while root:
-            if data < root.data:
-                root = root.left
-            elif data > root.data:
-                root = root.right
-            else:
-                return root
-        
-        return None
-
-    def searchR(self, data):
+    def search(self, data):
         return bst._search(self.root, data)
 
     def _search(root, data):
         if root is None:
-            return None
+            return
         elif data < root.data:
             return bst._search(root.left, data)
         elif data > root.data:
@@ -100,16 +57,7 @@ class bst:
         else:
             return root
 
-    def pathI(self, data):
-        root = self.root
-        while root:
-            print(root.data, end=' ')
-            if data < root.data:
-                root = root.left
-            elif data > root.data:
-                root = root.right
-
-    def pathR(self, data):
+    def path(self, data):
         bst._path(self.root, data)
 
     def _path(root, data):
@@ -121,10 +69,35 @@ class bst:
         elif data > root.data:
             bst._path(root.right, data)
 
+    def depth(self, data):
+        return bst._depth(self.root, data)
+
+    def _depth(root, data, depth=0):
+        if root is None:
+            return
+        elif data < root.data:
+            return bst._depth(root.left, data, depth+1)
+        elif data > root.data:
+            return bst._depth(root.right, data, depth+1)
+        else:
+            return depth
+
+    def maxDepth(self):
+        return bst._maxdepth(self.root)
+
+    def high(self, root): 
+        return bst._maxdepth(root)
+
+    def _maxdepth(root, depth=-1):
+        if root:
+            return max(bst._maxdepth(root.left, depth+1), bst._maxdepth(root.right, depth+1))
+        else:
+            return depth
+
     def bfs(self):
         stack = [self.root]
 
-    def inorderR(self):
+    def inorder(self):
         bst._inorder(self.root)
 
     def _inorder(root):
@@ -133,7 +106,7 @@ class bst:
             print(root.data, end=' ')
             bst._inorder(root.right)
 
-    def preorderR(self):
+    def preorder(self):
         bst._preorder(self.root)
 
     def _preorder(root):
@@ -142,7 +115,7 @@ class bst:
             bst._preorder(root.left)
             bst._preorder(root.right)
 
-    def postorderR(self):
+    def postorder(self):
         bst._postorder(self.root)
 
     def _postorder(root):
@@ -162,25 +135,31 @@ class bst:
 
 if __name__ == "__main__":
     t = bst()
-    tR = bst()
 
     l = [14,4,9,7,15,3,18,16,20,5,16]
     for i in l:
-        t.insertI(i)
-        tR.insertR(i)
-    
-    print("\ninOrder Iter : ")
-    t.inorderR()
-    print("\ninOrder Rec  : ")
-    tR.inorderR()
+        t.insert(i)
 
-    print("print sideway")
-    tR.printSideway();
+    print("print sideway  : ")
+    t.printSideway();
+   
+    print("\ninOrder Iter   : ", end=' ')
+    t.inorder()
+    print("\npreOrder Iter  : ", end=' ')
+    t.preorder()
+    print("\npostOrder Iter : ", end=' ')
+    t.postorder()
 
-    print("\npath %s: "%l[5], end='')
-    t.pathR(l[5])
+    print("\nmaxDepth : ", t.maxDepth())
 
-    tR.eraseR(9)
+    n = l[5]
+    nod = t.search(n)
+    print("search %d : "%n, nod)
+    print("high %d   : "%n, t.high(nod))
+    print("depth %d  : "%n, t.depth(n))
+    print("path %d   : "%n, end='')
+    t.path(n)
 
-    print("print sideway")
-    tR.printSideway();
+    print("\nerase %d  : "%n)
+    t.erase(n)
+    t.printSideway()
