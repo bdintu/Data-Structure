@@ -1,3 +1,4 @@
+from collections import deque
 from node import node
 
 class bst:
@@ -8,7 +9,7 @@ class bst:
         self.root = bst._insert(self.root, data)
 
     def _insert(root, data):
-        if root is None:
+        if not root:
             return node(data)
         else:
             if data < root.data:
@@ -48,7 +49,7 @@ class bst:
         return bst._search(self.root, data)
 
     def _search(root, data):
-        if root is None:
+        if not root:
             return
         elif data < root.data:
             return bst._search(root.left, data)
@@ -61,10 +62,12 @@ class bst:
         bst._path(self.root, data)
 
     def _path(root, data):
-        print(root.data, end=' ')
-        if root is None:
+        if not root:
             return
-        elif data < root.data:
+        
+        print(root, end=' ')
+        
+        if data < root.data:
             bst._path(root.left, data)
         elif data > root.data:
             bst._path(root.right, data)
@@ -72,15 +75,15 @@ class bst:
     def depth(self, data):
         return bst._depth(self.root, data)
 
-    def _depth(root, data, depth=0):
-        if root is None:
+    def _depth(root, data):
+        if not root:
             return
         elif data < root.data:
-            return bst._depth(root.left, data, depth+1)
+            return bst._depth(root.left, data) + 1
         elif data > root.data:
-            return bst._depth(root.right, data, depth+1)
+            return bst._depth(root.right, data) + 1
         else:
-            return depth
+            return 0
 
     def maxDepth(self):
         return bst._maxdepth(self.root)
@@ -88,14 +91,23 @@ class bst:
     def high(self, root): 
         return bst._maxdepth(root)
 
-    def _maxdepth(root, depth=-1):
+    def _maxdepth(root):
         if root:
-            return max(bst._maxdepth(root.left, depth+1), bst._maxdepth(root.right, depth+1))
+            return max(bst._maxdepth(root.left)+1, bst._maxdepth(root.right)+1)
         else:
-            return depth
+            return -1
 
     def bfs(self):
-        stack = [self.root]
+        stack = deque()
+        stack.append(self.root)
+        
+        while(stack):
+            root = stack.popleft()
+            print(root, end=' ')
+            if root.left:
+                stack.append(root.left)
+            if root.right:
+                stack.append(root.right)            
 
     def inorder(self):
         bst._inorder(self.root)
@@ -143,19 +155,22 @@ if __name__ == "__main__":
     print("print sideway  : ")
     t.printSideway();
    
-    print("\ninOrder Iter   : ", end=' ')
+    print("\ninOrder  : ", end=' ')
     t.inorder()
-    print("\npreOrder Iter  : ", end=' ')
+    print("\npreOrder : ", end=' ')
     t.preorder()
-    print("\npostOrder Iter : ", end=' ')
+    print("\npostOrder: ", end=' ')
     t.postorder()
+    print("\nbfs      : ", end=' ')
+    t.bfs()    
 
     print("\nmaxDepth : ", t.maxDepth())
 
     n = l[5]
     nod = t.search(n)
-    print("search %d : "%n, nod)
-    print("high %d   : "%n, t.high(nod))
+    if nod:
+        print("search %d : "%n, nod.data)
+        print("high %d   : "%n, t.high(nod))
     print("depth %d  : "%n, t.depth(n))
     print("path %d   : "%n, end='')
     t.path(n)
