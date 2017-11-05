@@ -32,6 +32,15 @@ def insertion(l):
             else:
                 l[j] = select
                 break
+            
+def shell(l):
+    gap = len(l)//2
+    while gap:
+        for i in range(gap):
+            if l[i] > l[i+gap]:
+                l[i], l[i+gap] = l[i+gap], l[i]
+        gap //= 2
+        
 
 l = [i*i for i in range(1, 6)]
 
@@ -51,4 +60,10 @@ shuffle(l)
 print("l:", l)
 insertion(l)
 print("insertion:", l)
+print()
+
+shuffle(l)
+print("l:", l)
+shell(l)
+print("shell:", l)
 print()
