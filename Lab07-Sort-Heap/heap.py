@@ -21,12 +21,11 @@ def insert(h, d):
         h[i], h[p(i)] = h[p(i)], h[i]
         i = (i-1)//2
 
-def deleteMin(h):
+def deleteMin(h, last):
     tmp = h[0]
-    s = len(h) -1
     i = 0
     
-    while cl(i) < s:
+    while cl(i) < last:
         if h[cl(i)] < h[cr(i)]:
             h[i] = h[cl(i)]
             i = cl(i)
@@ -34,8 +33,8 @@ def deleteMin(h):
             h[i] = h[cr(i)]
             i = cr(i)
 
-    h[i] = h[s]
-    h[s] = tmp
+    h[i] = h[last]
+    h[last] = tmp
 
 h = []
 l = [68,65,32,24,26,21,19,13,16,14]
@@ -44,15 +43,11 @@ for i in l:
     insert(h, i)
     print("heap:", h)
     print("heap:")
-    print90(h)    
-
-print("heap:", h)
-print("heap:")
-print90(h)
+    print90(h)
 
 for i in range(len(l)):
     print("deleteMin=", h[0], "FindPlaceFor", h[len(l)-1])
-    deleteMin(h)
+    deleteMin(h, len(l)-i-1)
     print("heap:", h)
     print("heap:")
     print90(h)
