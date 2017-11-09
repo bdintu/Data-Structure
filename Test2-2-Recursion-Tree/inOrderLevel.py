@@ -24,14 +24,14 @@ def inOrder(r):
         print(r, end=' ')
         inOrder(r.r)
 
-def g(r, n):
+def inOrderLevel(r, n):
+    a = 0
     if r:
-        g(r.l, n)
-        f = 0
-        if n >= r.d:
-            if r.r:
-                f = g(r.r, n) + 1
-        return f
+        a = inOrderLevel(r.l, n)
+        if r.d <= n:
+            a += 1
+            a += inOrderLevel(r.r, n)
+    return a
 
 def printSideWay(r, l=0):
 	if r:
@@ -51,5 +51,5 @@ print()
 printSideWay(r)
 print()
 
-n = 4
-print("{}:{}".format(n, g(r, n)))
+n = 16
+print("{}:{}".format(n, inOrderLevel(r, n)))
