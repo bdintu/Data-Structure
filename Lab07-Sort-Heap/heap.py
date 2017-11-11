@@ -19,7 +19,7 @@ def insert(h, d):
 
     while h[i] < h[p(i)] and i!=0:
         h[i], h[p(i)] = h[p(i)], h[i]
-        i = (i-1)//2
+        i = p(i)
 
 def deleteMin(h, last):
     tmp = h[0]
