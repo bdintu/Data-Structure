@@ -16,8 +16,7 @@ def bubbleSort(l):
 def selectionSort(l):
 	for i in range(len(l)):
 
-		min = l[i]
-		min_index = i
+		min, min_index = l[i], i
 
 		for j in range(i+1, len(l)):
 			if min > l[j]:
@@ -60,8 +59,7 @@ def mergeSort(l, left, right):
 		merge(l, left, mid, right)
 
 def merge(l, left, mid, right):
-	i = left
-	j = mid + 1
+	i, j = left, mid + 1
 	result = []
 	
 	while i <= mid and j <= right:
@@ -84,6 +82,31 @@ def merge(l, left, mid, right):
 	for j in result:
 		l[i] = j
 		i += 1
+		
+def quickSort(l, left, right):
+	if left < right:
+		pivot = quick(l, left, right)
+		quickSort(l, left, pivot-1)
+		quickSort(l, pivot+1, right)
+		
+def quick(l, left, right):
+	pivot = l[left]
+	i, j = left+1, right
+	
+	while i<j:
+		
+		while i < right and l[i] <= pivot:
+			i += 1
+		
+		while j > left and l[j] >= pivot:
+			j -= 1
+
+		if i < j:
+			l[i], l[j] = l[j], l[i]
+			
+	l[left], l[j] = l[j], l[left]
+	
+	return j
 
 l = [i*i for i in range(1, 7)]
 
@@ -116,4 +139,11 @@ shuffle(l)
 print("l:", l)
 mergeSort(l, 0, len(l)-1)
 print("merge:", l)
+print()
+
+
+shuffle(l)
+print("l:", l)
+quickSort(l, 0, len(l)-1)
+print("quick:", l)
 print()
