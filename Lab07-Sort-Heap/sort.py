@@ -93,19 +93,20 @@ def quick(l, left, right):
 	pivot = l[left]
 	i, j = left+1, right
 	
-	while i<j:
-		
-		while i < right and l[i] <= pivot:
+	done = False
+	while not done:
+		while i <= j and l[i] <= pivot:
 			i += 1
 		
-		while j > left and l[j] >= pivot:
+		while j >= i and l[j] >= pivot:
 			j -= 1
 
 		if i < j:
 			l[i], l[j] = l[j], l[i]
+		else:
+			done = True
 			
 	l[left], l[j] = l[j], l[left]
-	
 	return j
 
 l = [i*i for i in range(1, 7)]
