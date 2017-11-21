@@ -1,7 +1,6 @@
 from random import shuffle
-#from prime import getPrime
 
-def bubble(l):
+def bubbleSort(l):
 	for i in range(len(l)):
 
 		isSwap = False
@@ -14,7 +13,7 @@ def bubble(l):
 		if not isSwap:
 			break
 
-def selection(l):
+def selectionSort(l):
 	for i in range(len(l)):
 
 		min = l[i]
@@ -27,7 +26,7 @@ def selection(l):
 		
 		l[i], l[min_index] = l[min_index], l[i]
 		
-def insertion(l):
+def insertionSort(l):
 	for i in range(1, len(l)):
 		
 		insert = l[i]
@@ -39,7 +38,7 @@ def insertion(l):
 				l[j] = insert
 				break
 
-def shell(l, gaps):
+def shellSort(l, gaps):
 	for gap in gaps:
 		for i in range(gap, len(l)):
 
@@ -50,31 +49,71 @@ def shell(l, gaps):
 					l[j] = l[j-gap]
 				else:
 					l[j] = insert
-					break			
+					break
+				
+def mergeSort(l, left, right):
+	if left < right:
+		mid = (left+right)//2
 
-l = [i*i for i in range(1, 6)]
+		mergeSort(l, left, mid)
+		mergeSort(l, mid+1, right)
+		merge(l, left, mid, right)
+
+def merge(l, left, mid, right):
+	i = left
+	j = mid + 1
+	result = []
+	
+	while i <= mid and j <= right:
+		if l[i] < l[j]:
+			result.append(l[i])
+			i += 1
+		else:
+			result.append(l[j])
+			j += 1
+			
+	while i <= mid:
+		result.append(l[i])
+		i += 1
+		
+	while j <= right:
+		result.append(l[j])
+		j += 1
+		
+	i = left
+	for j in result:
+		l[i] = j
+		i += 1
+
+l = [i*i for i in range(1, 7)]
 
 shuffle(l)
 print("l:", l)
-bubble(l)
+bubbleSort(l)
 print("bubble:", l)
 print()
 
 shuffle(l)
 print("l:", l)
-selection(l)
+selectionSort(l)
 print("selection:", l)
 print()
 
 shuffle(l)
 print("l:", l)
-insertion(l)
+insertionSort(l)
 print("insertion:", l)
 print()
 
-gaps = [3, 1]
+gaps = [19, 5, 1]
 shuffle(l)
 print("l:", l)
-shell(l, gaps)
+shellSort(l, gaps)
 print("shell:", l)
+print()
+
+shuffle(l)
+print("l:", l)
+mergeSort(l, 0, len(l)-1)
+print("merge:", l)
 print()
