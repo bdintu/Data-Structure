@@ -1,46 +1,56 @@
 from random import shuffle
+#from prime import getPrime
 
 def bubble(l):
-    for i in range(len(l)-1):
-        isSwap = False
-        
-        for j in range(len(l)-2, i-1, -1):
-            if l[j] > l[j+1]:
-                l[j], l[j+1] = l[j+1], l[j]
-                isSwap = True
+	for i in range(len(l)):
 
-        if not isSwap:
-            break;
-            
+		isSwap = False
+
+		for j in range(len(l) -2, i-1, -1):
+			if l[j] > l[j+1]:
+				l[j], l[j+1] = l[j+1], l[j]
+				isSwap = True
+
+		if not isSwap:
+			break
+
 def selection(l):
-    for i in range(len(l)-1):
-        min = l[i]
-        min_i = i
-        for j in range(i+1, len(l)):
-            if l[j] < min:
-                min = l[j]
-                min_i = j
-                
-        l[i], l[min_i] = l[min_i], l[i]
-        
+	for i in range(len(l)):
+
+		min = l[i]
+		min_index = i
+
+		for j in range(i+1, len(l)):
+			if min > l[j]:
+				min = l[j]
+				min_index = j
+		
+		l[i], l[min_index] = l[min_index], l[i]
+		
 def insertion(l):
-    for i in range(len(l)):
-        select = l[i]
-        for j in range(i, -1, -1):
-            if select < l[j-1] and j > 0:
-                l[j] = l[j-1]
-            else:
-                l[j] = select
-                break
-            
-def shell(l):
-    gap = len(l)//2
-    while gap:
-        for i in range(gap):
-            if l[i] > l[i+gap]:
-                l[i], l[i+gap] = l[i+gap], l[i]
-        gap //= 2
-        
+	for i in range(1, len(l)):
+		
+		insert = l[i]
+		
+		for j in range(i, -1, -1):
+			if insert < l[j-1] and j > 0:
+				l[j] = l[j-1]
+			else:
+				l[j] = insert
+				break
+
+def shell(l, gaps):
+	for gap in gaps:
+		for i in range(gap, len(l)):
+
+			insert = l[i]
+			
+			for j in range(i, -1, -gap):
+				if insert < l[j-gap] and j >= gap:
+					l[j] = l[j-gap]
+				else:
+					l[j] = insert
+					break			
 
 l = [i*i for i in range(1, 6)]
 
@@ -62,8 +72,9 @@ insertion(l)
 print("insertion:", l)
 print()
 
+gaps = [3, 1]
 shuffle(l)
 print("l:", l)
-shell(l)
+shell(l, gaps)
 print("shell:", l)
 print()
